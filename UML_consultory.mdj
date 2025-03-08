@@ -135,6 +135,7 @@
 											"model": {
 												"$ref": "AAAAAAGVdpb5kIKqIeE="
 											},
+											"visible": false,
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 341,
@@ -156,7 +157,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 341,
-											"top": 93,
+											"top": 80,
 											"width": 128.89892578125,
 											"height": 13,
 											"text": "-dni: String",
@@ -174,7 +175,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 341,
-											"top": 108,
+											"top": 95,
 											"width": 128.89892578125,
 											"height": 13,
 											"text": "-name: String",
@@ -192,7 +193,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 341,
-											"top": 123,
+											"top": 110,
 											"width": 128.89892578125,
 											"height": 13,
 											"text": "-lastName: String",
@@ -210,7 +211,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 341,
-											"top": 138,
+											"top": 125,
 											"width": 128.89892578125,
 											"height": 13,
 											"text": "-phoneNumber: String",
@@ -228,7 +229,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 341,
-											"top": 153,
+											"top": 140,
 											"width": 128.89892578125,
 											"height": 13,
 											"text": "-address: String",
@@ -246,7 +247,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 341,
-											"top": 168,
+											"top": 155,
 											"width": 128.89892578125,
 											"height": 13,
 											"text": "-email: String",
@@ -264,7 +265,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 341,
-											"top": 183,
+											"top": 170,
 											"width": 128.89892578125,
 											"height": 13,
 											"text": "-dateBirth: Date",
@@ -314,7 +315,7 @@
 									"left": 336,
 									"top": 73,
 									"width": 138.89892578125,
-									"height": 128
+									"height": 115
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -338,7 +339,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 341,
-											"top": 206,
+											"top": 193,
 											"width": 128.89892578125,
 											"height": 13,
 											"text": "+get()",
@@ -356,7 +357,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 341,
-											"top": 221,
+											"top": 208,
 											"width": 128.89892578125,
 											"height": 13,
 											"text": "+set()",
@@ -366,7 +367,7 @@
 									"font": "Arial;13;0",
 									"parentStyle": true,
 									"left": 336,
-									"top": 201,
+									"top": 188,
 									"width": 138.89892578125,
 									"height": 38
 								},
@@ -5931,7 +5932,8 @@
 								"$ref": "AAAAAAGVdrZbR7aN72E="
 							},
 							"name": "type.String",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [
