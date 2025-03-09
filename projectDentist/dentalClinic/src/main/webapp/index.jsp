@@ -2,18 +2,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-
         <%@include file="layout/header.jsp" %>
         <title>Dashboard</title>
     </head>
-    <body>
+    <body id="page-top">
         <div id="wrapper">
-            
-                
-                    <%@include file="layout/side_bar.jsp" %>
-                    <%@include file="layout/nav.jsp" %>
-                </div>
-            
-        <%@include file="layout/script.jsp" %>       
+            <%@include file="layout/side_bar.jsp" %>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <%@include file="layout/nav.jsp" %>
+                <%@include file="layout/footer.jsp" %>
+            </div>
+        </div>
+        <%@include file="layout/script.jsp" %> 
+        
     </body>
 </html>
