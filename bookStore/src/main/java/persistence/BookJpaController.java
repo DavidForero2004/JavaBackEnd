@@ -22,7 +22,7 @@ import persistence.exceptions.NonexistentEntityException;
 
 /**
  *
- * @author david
+ * @author david forero
  */
 public class BookJpaController implements Serializable {
 

@@ -21,7 +21,7 @@ import persistence.exceptions.NonexistentEntityException;
 
 /**
  *
- * @author david
+ * @author david forero
  */
 public class CategoryJpaController implements Serializable {
 

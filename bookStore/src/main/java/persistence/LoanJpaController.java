@@ -20,7 +20,7 @@ import persistence.exceptions.NonexistentEntityException;
 
 /**
  *
- * @author david
+ * @author david forero
  */
 public class LoanJpaController implements Serializable {
 
