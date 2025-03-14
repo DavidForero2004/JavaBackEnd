@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="layout/header.jsp" %>
+        <%@include file="../layout/header.jsp" %>
         <title>JSP Page</title>
     </head>  
     <body class="bg-gradient-primary">
@@ -66,7 +66,7 @@
                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
+                                <a class="small" href="../login.jsp">Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>

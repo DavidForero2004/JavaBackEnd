@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="" %>
+        <%@include file="layout/header.jsp" %>
         <title>JSP Page</title>
         
     </head>
@@ -25,7 +25,6 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
@@ -64,7 +63,7 @@
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="singUp.jsp">Create an Account!</a>
+                                        <a class="small" href="">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>
@@ -74,6 +73,6 @@
             </div>
         </div>
     </div>
-        <%@include file="../layout/script.jsp" %> 
+        <%@include file="layout/script.jsp" %> 
 </body>
 </html>
