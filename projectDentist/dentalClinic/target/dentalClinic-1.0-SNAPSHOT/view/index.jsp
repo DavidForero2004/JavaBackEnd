@@ -6,6 +6,13 @@
         <title>Dashboard</title>
     </head>
     <body id="page-top">
+        <%
+            HttpSession sesion = request.getSession(false);
+            if (sesion == null || sesion.getAttribute("email") == null) {
+                response.sendRedirect("login.jsp");
+                return;
+            }
+        %>
         <div id="wrapper">
             <%@include file="../layout/side_bar.jsp" %>
             <div id="content-wrapper" class="d-flex flex-column">
@@ -14,6 +21,6 @@
             </div>
         </div>
         <%@include file="../layout/script.jsp" %> 
-        
+
     </body>
 </html>
