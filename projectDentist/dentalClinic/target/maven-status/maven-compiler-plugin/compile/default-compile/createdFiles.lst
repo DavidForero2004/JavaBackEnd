@@ -1,0 +1,9 @@
+persistence\exceptions\NonexistentEntityException.class
+persistence\exceptions\PreexistingEntityException.class
+controller\userController.class
+persistence\exceptions\IllegalOrphanException.class
+persistence\UserJpaController.class
+model\Rol.class
+persistence\RolJpaController.class
+model\Person.class
+model\User.class
