@@ -4,7 +4,9 @@
  */
 package model;
 
+import jakarta.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.LinkedList;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,14 +27,18 @@ public class user implements Serializable {
     private int id;
     private String email;
     private String password;
+    
+    @OneToMany
+    private LinkedList<Rol> id_rol;
 
     public user() {
     }
 
-    public user(int id, String email, String password) {
+    public user(int id, String email, String password, LinkedList<Rol> id_rol) {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.id_rol = id_rol;
     }
 
     public int getId() {
@@ -58,6 +64,16 @@ public class user implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public LinkedList<Rol> getId_rol() {
+        return id_rol;
+    }
+
+    public void setId_rol(LinkedList<Rol> id_rol) {
+        this.id_rol = id_rol;
+    }
+
+    
 
     @Override
     public String toString() {
