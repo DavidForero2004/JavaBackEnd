@@ -6,6 +6,11 @@
 
 <%@page import="persistence.RolJpaController"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setDateHeader("Expires", 0); // Proxies
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,25 +20,24 @@
 
     </head>
     <body>
-        <% RolJpaController jpaC = new RolJpaController(); %>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="wrapper">
                         <div class="form" id="form1">
                             <div class="title"><h1>Login</h1></div>
-                            <form action="#" class="loginForm">
+                            <form action="userController"  method="POST" class="loginForm">
                                 <div class="profileImage">
                                    <i class="fa-solid fa-tooth"></i>
 
                                 </div>
                                 <div class="form-group">
                                     <i class="fa fa-envelope form-icon"></i>
-                                    <input type="email" class="form-control" id="email" placeholder="Email">
+                                    <input type="email" class="form-control" name= "email" id="email" placeholder="Email">
                                 </div>
                                 <div class="form-group">
                                     <i class="fa fa-lock form-icon"></i>
-                                    <input type="password" class="form-control" id="pwd" placeholder="Password">
+                                    <input type="password" class="form-control" name="password" id="pwd" placeholder="Password">
                                 </div>
                                 <button type="submit" class="btn btn-default">login</button>
                             </form>

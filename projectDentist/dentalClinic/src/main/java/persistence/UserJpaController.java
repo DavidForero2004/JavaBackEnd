@@ -12,6 +12,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import javax.persistence.NoResultException;
+import javax.persistence.criteria.CriteriaBuilder;
 import model.User;
 import persistence.exceptions.NonexistentEntityException;
 
@@ -121,6 +123,27 @@ public class UserJpaController implements Serializable {
         }
     }
 
+    public User findUserByEmail(String email) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<User> cq = cb.createQuery(User.class);
+            Root<User> user = cq.from(User.class);
+            cq.select(user).where(cb.equal(user.get("email"), email));
+
+            Query query = em.createQuery(cq);
+            return (User) query.getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("No se encontró el usuario con el email: " + email);
+            return null;
+        } catch (Exception e) { // Imprime otros errores en la consola
+            // Imprime otros errores en la consola
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
     public int getUserCount() {
         EntityManager em = getEntityManager();
         try {
@@ -133,5 +156,5 @@ public class UserJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
