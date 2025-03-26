@@ -33,7 +33,6 @@ public class userController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
     }
 
     @Override
@@ -47,26 +46,29 @@ public class userController extends HttpServlet {
     }
 
     protected void findUser(String email, String password, HttpServletResponse response, HttpServletRequest request) throws IOException {
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("DentistPu");
         UserJpaController userJPA = new UserJpaController(emf);
 
         User user = userJPA.findUserByEmail(email);
 
         if (user != null) {
+
             String pass = user.getPassword();
             boolean isTrue = userLogin(email, password, user.getEmail(), pass);
-            System.out.println(isTrue);
+
             if (isTrue == true) {
+                //crear una sesion
                 HttpSession session = request.getSession(true);
                 session.setAttribute("userSession", user);
-                System.out.println("Sesión creada: " + session.getAttribute("userSession"));
+
                 response.sendRedirect("view/index.jsp");
             } else {
-                request.getSession().setAttribute("errorMessage", "Usuario o Contraseña incorrectos");
+
                 response.sendRedirect("login.jsp");
             }
         } else {
-            request.getSession().setAttribute("errorMessage", "Usuario o Contraseña incorrectos");
+
             response.sendRedirect("login.jsp");
         }
     }

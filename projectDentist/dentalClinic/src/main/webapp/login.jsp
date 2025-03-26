@@ -16,19 +16,19 @@
     <head>
         <%@include file="layout/header.jsp" %>
         <link rel="stylesheet" href="styles/css/login.css"/>
-        <title>JSP Page</title>
+        <title>DentalIng</title>
 
     </head>
     <body>
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12" style="display: flex;justify-content: center;align-items: center; width: 100vw;height: 100vh;">
                     <div class="wrapper">
                         <div class="form" id="form1">
                             <div class="title"><h1>Login</h1></div>
                             <form action="userController"  method="POST" class="loginForm">
                                 <div class="profileImage">
-                                   <i class="fa-solid fa-tooth"></i>
+                                    <i class="fa-solid fa-tooth"></i>
 
                                 </div>
                                 <div class="form-group">
@@ -46,7 +46,7 @@
                             <div class="title"><h1>Sing Up</h1></div>
                             <form action="#" class="signupForm">
                                 <div class="profileImage">
-                                   <i class="fa-solid fa-tooth"></i>
+                                    <i class="fa-solid fa-tooth"></i>
                                 </div>
                                 <div class="form-group">
                                     <i class="fa fa-envelope form-icon"></i>

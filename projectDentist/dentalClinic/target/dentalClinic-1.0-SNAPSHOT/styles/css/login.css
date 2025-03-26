@@ -18,11 +18,11 @@ body {
     display: none;
 }
 .wrapper {
-    width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 380px;
     height: 500px;
-    margin: auto;
-    margin-top: 50px;
-    position: relative;
     .form {
         border-radius: 10px;
         overflow: hidden;
@@ -101,7 +101,7 @@ body {
                 box-shadow: none;
                 border-color: #fff;
                 padding-left: 45px;
-                color: #fff;
+                color: #320919;
                 &::placeholder{
                     color: #320919;
                 }
