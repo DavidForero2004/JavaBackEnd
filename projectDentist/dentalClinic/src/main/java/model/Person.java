@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
-
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -18,7 +17,7 @@ import javax.persistence.TemporalType;
 @MappedSuperclass
 public abstract class Person {
 
-    @Column(name = "dni")
+    @Column(name = "dni",unique = true)
     private String dni;
     @Column(name = "name")
     private String name;
@@ -28,12 +27,28 @@ public abstract class Person {
     private String phoneNumber;
     @Column(name = "address")
     private String address;
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String email;
     @Column(name = "dateBirth")
     @Temporal(TemporalType.DATE)
     private Date dateBirth;
 
+    public Person() {
+    }
+
+    public Person(String dni, String name, String lastName, String phoneNumber, String address, String email, Date dateBirth) {
+        this.dni = dni;
+        this.name = name;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.email = email;
+        this.dateBirth = dateBirth;
+    }
+
+    
+    
+    
     // Getters y Setters
     public String getDni() {
         return dni;

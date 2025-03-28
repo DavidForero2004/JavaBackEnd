@@ -18,7 +18,7 @@ import persistence.exceptions.NonexistentEntityException;
 
 /**
  *
- * @author david
+ * @author juand
  */
 public class DentistJpaController implements Serializable {
 
@@ -30,9 +30,9 @@ public class DentistJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
-    public DentistJpaController() {
-        emf = Persistence.createEntityManagerFactory("DentistPu");
+    
+    public DentistJpaController(){
+        emf=Persistence.createEntityManagerFactory("DentistPu");
     }
 
     public void create(Dentist dentist) {
@@ -138,5 +138,5 @@ public class DentistJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

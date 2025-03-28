@@ -18,7 +18,7 @@ import persistence.exceptions.NonexistentEntityException;
 
 /**
  *
- * @author david
+ * @author juand
  */
 public class ScheduleJpaController implements Serializable {
 
@@ -30,11 +30,11 @@ public class ScheduleJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
-     public ScheduleJpaController() {
-        emf = Persistence.createEntityManagerFactory("DentistPu");
-    }
     
+    public ScheduleJpaController(){
+        emf=Persistence.createEntityManagerFactory("DentistPu");
+    }
+
     public void create(Schedule schedule) {
         EntityManager em = null;
         try {

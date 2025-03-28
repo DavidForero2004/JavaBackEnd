@@ -5,7 +5,7 @@
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     response.setHeader("Pragma", "no-cache");
     response.setDateHeader("Expires", 0);
-
+    
     HttpSession sessionObj = request.getSession(false);
     User user = (sessionObj != null) ? (User) sessionObj.getAttribute("userSession") : null;
 
@@ -23,7 +23,6 @@
             <i class="fa fa-bars"></i>
         </button>
 
-
         <!-- Topbar Navbar -->
         <ul class="navbar-nav ml-auto">
 
@@ -31,7 +30,7 @@
             <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"><b> <%= user.getUserName()%></b> </span>
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"><b> Bienvenid@ <%= user.getUserName() %></b> </span>
                     <img class="img-profile rounded-circle"
                          src="../styles/img/undraw_profile_3.svg">
                 </a>

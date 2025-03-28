@@ -13,13 +13,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import model.User;
 import persistence.exceptions.NonexistentEntityException;
 
 /**
  *
- * @author david
+ * @author juand
  */
 public class UserJpaController implements Serializable {
 
@@ -30,6 +31,10 @@ public class UserJpaController implements Serializable {
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
+    }
+    
+    public UserJpaController(){
+        emf=Persistence.createEntityManagerFactory("DentistPu");
     }
 
     public void create(User user) {
@@ -126,21 +131,21 @@ public class UserJpaController implements Serializable {
     public User findUserByEmail(String email) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<User> cq = cb.createQuery(User.class);
-            Root<User> user = cq.from(User.class);
-            cq.select(user).where(cb.equal(user.get("email"), email));
-
-            Query query = em.createQuery(cq);
-            return (User) query.getSingleResult();
+            // Consulta JPQL corregida (usa nombres de entidad, no de tabla)
+            String jpql = "SELECT u FROM User u WHERE u.email = :email";
+            return em.createQuery(jpql, User.class)
+                    .setParameter("email", email.trim())
+                    .getSingleResult();
         } catch (NoResultException e) {
-            System.out.println("No se encontró el usuario con el email: " + email);
+            System.out.println("Usuario no encontrado con email: " + email);
             return null;
-        } catch (Exception e) { // Imprime otros errores en la consola
-            // Imprime otros errores en la consola
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
             return null;
         } finally {
-            em.close();
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
         }
     }
 

@@ -22,11 +22,13 @@ body {
     justify-content: center;
     align-items: center;
     width: 380px;
-    height: 500px;
+    min-height: 500px;
     .form {
+        display: flex;
+        flex-direction: column;
         border-radius: 10px;
-        overflow: hidden;
-        height: inherit;
+        overflow-y: auto;
+        max-height: 90vh;
         width: inherit;
         position: absolute;
         top: 0;
@@ -117,10 +119,16 @@ body {
                 text-transform: uppercase;
                 font-weight:600;
             }
+            .signupForm {
+                display: flex !important;
+                flex-grow: 1 !important; 
+                overflow-y: auto !important; 
+                max-height: 75vh !important; 
+                padding: 10px !important;
+            }
         }
     }
 }
-
 
 
 

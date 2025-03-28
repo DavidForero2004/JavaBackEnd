@@ -35,6 +35,16 @@ public class User extends Person implements Serializable {
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;
 
+    public User() {
+    }
+
+    public User(int id, String userName, String password, Rol rol) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.rol = rol;
+    }
+        
     // Getters y Setters
     public int getId() {
         return id;
