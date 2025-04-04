@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +22,7 @@ import model.Rol;
 import model.User;
 import org.mindrot.jbcrypt.BCrypt;
 import persistence.UserJpaController;
+import persistence.exceptions.NonexistentEntityException;
 
 @WebServlet(name = "userController", urlPatterns = {"/userController"})
 public class userController extends HttpServlet {
@@ -36,6 +39,13 @@ public class userController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        List<User> listUser = listUser();
+        HttpSession misession = request.getSession();
+        misession.setAttribute("listUser", listUser);
+
+        response.sendRedirect("view/showUser.jsp");
+
     }
 
     @Override
@@ -50,13 +60,14 @@ public class userController extends HttpServlet {
         switch (action) {
             case "signup":
                 try {
+
                     String dni = request.getParameter("dni");
                     String name = request.getParameter("name");
                     String lastName = request.getParameter("lastName");
                     String phoneNumber = request.getParameter("phoneNumber");
                     String address = request.getParameter("address");
                     String userName = request.getParameter("userName");
-                    String dateBirthStr = request.getParameter("dateBirth");                
+                    String dateBirthStr = request.getParameter("dateBirth");
 
                     // Validar que ningún campo esté vacío
                     if (dni == null || name == null || lastName == null || phoneNumber == null
@@ -93,6 +104,7 @@ public class userController extends HttpServlet {
                     rol.setId(1);
 
                     User user = new User();
+
                     user.setDni(dni);
                     user.setName(name);
                     user.setLastName(lastName);
@@ -107,6 +119,7 @@ public class userController extends HttpServlet {
                     createUser(user); // Método para guardar el usuario en la BD
 
                     response.sendRedirect("login.jsp?success=Usuario registrado exitosamente.");
+
                 } catch (ParseException e) {
                     response.sendRedirect("login.jsp?error=Formato de fecha incorrecto.");
                 } catch (Exception ex) {
@@ -136,6 +149,80 @@ public class userController extends HttpServlet {
                     response.sendRedirect("login.jsp?error=true");
                 }
                 break;
+
+            case "edit":
+
+                try {
+
+                    int id = Integer.parseInt(request.getParameter("id_usuarioEditar"));
+                    User user = userJPA.findUser(id);
+
+                    if (user == null) {
+                        response.sendRedirect("view/index.jsp?error=Usuario no encontrado.");
+                        return;
+                    }
+
+                    String dni = request.getParameter("dniEdit");
+                    String name = request.getParameter("nameEdit");
+                    String lastName = request.getParameter("lastNameEdit");
+                    String phoneNumber = request.getParameter("phoneNumberEdit");
+                    String address = request.getParameter("addressEdit");
+                    String userName = request.getParameter("usernameedit");
+                    String dateBirthStr = request.getParameter("dateBirthEdit");
+                    String emailEdit = request.getParameter("emailEdit");
+                    int rolId = Integer.parseInt(request.getParameter("idrol"));
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    Date dateBirth = formatter.parse(dateBirthStr);
+
+                    user.setId(id);
+                    Rol rol = new Rol();
+                    rol.setId(rolId);
+
+                    user.setDni(dni);
+                    user.setName(name);
+                    user.setLastName(lastName);
+                    user.setPhoneNumber(phoneNumber);
+                    user.setAddress(address);
+                    user.setUserName(userName);
+                    user.setDateBirth(dateBirth);
+                    user.setEmail(emailEdit);
+                    user.setRol(rol);
+
+                    userJPA.edit(user);
+                    /*volver a recargar los usuarios*/
+                    listUser = userJPA.findUserEntities();
+
+                    HttpSession session = request.getSession();
+                    session.setAttribute("listUser", listUser);
+
+                    response.sendRedirect("view/showUser.jsp?success=Usuario editado correctamente.");
+
+                } catch (NumberFormatException | ParseException e) {
+                    System.out.println(e);
+                    response.sendRedirect("view/index.jsp?error=Error en los datos del usuario.");
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                    response.sendRedirect("view/index.jsp?error=No se pudo editar el usuario.");
+                }
+                break;
+            case "Delete":
+                int idDelete = Integer.parseInt(request.getParameter("id_usuarioEliminar"));
+                 {
+                    try {
+                        listUser = userJPA.findUserEntities();
+
+                        HttpSession session = request.getSession();
+                        session.setAttribute("listUser", listUser);
+
+                        userJPA.destroy(idDelete);
+                        response.sendRedirect("view/showUser.jsp?success=Usuario eliminado correctamente.");
+                    } catch (NonexistentEntityException ex) {
+                         response.sendRedirect("view/index.jsp?error=No se pudo eliminar el usuario.");
+                        Logger.getLogger(userController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
+
             default:
                 throw new AssertionError();
         }
@@ -180,6 +267,22 @@ public class userController extends HttpServlet {
         //Encrypt
         String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
         return passwordHash;
+    }
+
+    public List<User> listUser() {
+        return userJPA.findUserEntities();
+    }
+
+    public User getUser(int id_editar) {
+        return userJPA.findUser(id_editar);
+    }
+
+    public void editUser(User user) {
+        try {
+            userJPA.edit(user);
+        } catch (Exception ex) {
+            Logger.getLogger(userController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
