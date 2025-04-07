@@ -10,13 +10,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author juand
  */
 @Entity
-public class Responsible implements Serializable {
+@Table(name = "resposible")
+public class Responsible extends Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

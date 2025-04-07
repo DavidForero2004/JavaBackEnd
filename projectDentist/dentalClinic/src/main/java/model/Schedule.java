@@ -25,19 +25,19 @@ public class Schedule implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "startDate")
-    private String startDate;
+    @Column(name = "startTime")
+    private String startTime;
 
-    @Column(name = "endDate")
-    private String endDate;
+    @Column(name = "endTime")
+    private String endTime;
 
     public Schedule() {
     }
 
-    public Schedule(Integer id, String startDate, String endDate) {
+    public Schedule(Integer id, String startTime, String endTime) {
         this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public Integer getId() {
@@ -48,21 +48,23 @@ public class Schedule implements Serializable {
         this.id = id;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
+
+    
 
     @Override
     public int hashCode() {

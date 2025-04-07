@@ -9,10 +9,10 @@ import javax.persistence.EntityManagerFactory;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import javax.persistence.Persistence;
 import model.Rol;
 import persistence.exceptions.NonexistentEntityException;
 
@@ -30,7 +30,6 @@ public class RolJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-    
     public RolJpaController(){
         emf=Persistence.createEntityManagerFactory("DentistPu");
     }

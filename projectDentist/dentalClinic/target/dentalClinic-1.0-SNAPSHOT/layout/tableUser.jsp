@@ -4,6 +4,7 @@
     Author     : juand
 --%>
 
+<%@page import="controller.userController"%>
 <%@page import="model.Rol"%>
 <%@page import="controller.rolController"%>
 <%@page import="model.User"%>
@@ -43,6 +44,7 @@
 
                     <tbody>
                         <%
+                            userController ControlU = new userController();
                             List<User> listUser = (List<User>) session.getAttribute("listUser");
 
                             int cont = 1;
@@ -58,8 +60,12 @@
                             <td><%=listU.getPhoneNumber()%></td>
                             <td><%=listU.getAddress()%></td>
                             <td><%=listU.getEmail()%></td>
-                            <td><%=listU.getDateBirth()%></td>
-                            <td><%=listU.getRol().getName()%> </td>
+                            <%
+                                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+                                sdf.setTimeZone(java.util.TimeZone.getTimeZone("America/Bogota")); // o tu zona local
+                            %>
+                            <td><%= (listU.getDateBirth() != null) ? sdf.format(listU.getDateBirth()) : ""%></td>
+                            <td><%=listU.getRol().getName() %> </td>
                             <td>
                                 <a href="#" class="editU" data-toggle="modal" data-target="#editEmployeeModal"
                                    data-id="<%=listU.getId()%>"
@@ -109,7 +115,7 @@
                             <input type="text" class="form-control" id="editDni" name="dniEdit" required>
                         </div>
                         <div class="form-group">
-                            <label>UserName</label>
+                            <label>User Name</label>
                             <input type="text" class="form-control" id="editUsername" name="usernameedit" required>
                         </div>
                         <div class="form-group">
@@ -117,23 +123,23 @@
                             <input type="text" class="form-control" id="editName" name="nameEdit" required>
                         </div>
                         <div class="form-group">
-                            <label>lastName</label>
+                            <label>Last Name</label>
                             <input type="text" class="form-control" id="editPhoneNumber" name="lastNameEdit" required>
                         </div>	
                         <div class="form-group">
-                            <label>phoneNumber</label>
+                            <label>Phone number</label>
                             <input type="text" class="form-control" id="editAddress" name="phoneNumberEdit" required>
                         </div>
                         <div class="form-group">
-                            <label>address</label>
+                            <label>Address</label>
                             <input type="text" class="form-control" id="editTelefono" name="addressEdit" required>
                         </div>
                         <div class="form-group">
-                            <label>email</label>
+                            <label>Email</label>
                             <input type="text" class="form-control" id="editEmail" name="emailEdit" required>
                         </div>
                         <div class="form-group">
-                            <label>dateBirth</label>
+                            <label>Date Birth</label>
                             <input type="date" class="form-control" id="editDateBirth" name="dateBirthEdit" required>
                         </div>
                         <div class="form-group">
@@ -184,3 +190,4 @@
         </div>
     </div>
 </div>
+

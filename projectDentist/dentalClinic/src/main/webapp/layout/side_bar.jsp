@@ -23,7 +23,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="index.jsp">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -36,7 +36,7 @@
         Interface
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
+    <!-- Nav Item - Users Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
@@ -47,10 +47,43 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Opciones de usuarios:</h6>
                 <a class="collapse-item" href="../userController" name="action" value="verU" >Ver usuarios</a>
-                <a class="collapse-item" href="cards.html">Registrar usuarios</a>
+                <a class="collapse-item" href="../view/CreateUser.jsp">Registrar usuarios</a>
             </div>
         </div>
     </li>
+    
+    <!-- Nav Item - Schedules Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSchedules"
+           aria-expanded="true" aria-controls="collapseSchedules">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Horarios</span>
+        </a>
+        <div id="collapseSchedules" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Opciones de horarios</h6>
+                <a class="collapse-item" href="../ScheduleController" name="action" value="verU" >Ver horarios</a>
+                <a class="collapse-item" href="../view/CreateSchedule.jsp">Registrar horarios</a>
+            </div>
+        </div>
+    </li>
+    
+    <!-- Nav Item - Responsible Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseResposible"
+           aria-expanded="true" aria-controls="collapseResposible">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Responsable</span>
+        </a>
+        <div id="collapseResposible" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Opciones de responsables</h6>
+                <a class="collapse-item" href="../ResponsibleController" name="action" value="verU" >Ver responsables</a>
+                <a class="collapse-item" href="../view/CreateResponsible.jsp">Registrar responsables</a>
+            </div>
+        </div>
+    </li>
+    
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">

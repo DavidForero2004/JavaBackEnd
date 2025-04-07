@@ -6,9 +6,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 import model.Schedule;
 import model.User;
 
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-04-03T20:49:09")
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-04-07T13:43:44")
 @StaticMetamodel(Dentist.class)
-public class Dentist_ { 
+public class Dentist_ extends Person_ {
 
     public static volatile SingularAttribute<Dentist, Schedule> schedule;
     public static volatile SingularAttribute<Dentist, String> specialty;

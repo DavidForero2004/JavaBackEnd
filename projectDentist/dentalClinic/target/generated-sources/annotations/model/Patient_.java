@@ -6,9 +6,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 import model.Responsible;
 import model.User;
 
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-04-03T20:49:09")
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2025-04-07T13:43:44")
 @StaticMetamodel(Patient.class)
-public class Patient_ { 
+public class Patient_ extends Person_ {
 
     public static volatile SingularAttribute<Patient, Responsible> responsible;
     public static volatile SingularAttribute<Patient, Boolean> eps;

@@ -22,7 +22,9 @@ controller\userController.class
 model\Responsible_.class
 model\Turn_.class
 persistence\UserJpaController.class
+controller\ResponsibleController.class
 controller\logOut.class
+controller\ScheduleController.class
 persistence\DentistJpaController.class
 model\Secretary_.class
 persistence\TurnJpaController.class

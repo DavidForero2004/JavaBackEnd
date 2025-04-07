@@ -100,6 +100,7 @@ public class userController extends HttpServlet {
                     // Si pasa todas las validaciones, encriptamos la contraseña y creamos el usuario
                     password = hashPassword(password, passwordRpd); // Asegúrate de que este método encripte bien la contraseña
 
+                    
                     Rol rol = new Rol();
                     rol.setId(1);
 
@@ -209,17 +210,83 @@ public class userController extends HttpServlet {
                 int idDelete = Integer.parseInt(request.getParameter("id_usuarioEliminar"));
                  {
                     try {
+                        userJPA.destroy(idDelete);
                         listUser = userJPA.findUserEntities();
 
                         HttpSession session = request.getSession();
                         session.setAttribute("listUser", listUser);
 
-                        userJPA.destroy(idDelete);
                         response.sendRedirect("view/showUser.jsp?success=Usuario eliminado correctamente.");
                     } catch (NonexistentEntityException ex) {
-                         response.sendRedirect("view/index.jsp?error=No se pudo eliminar el usuario.");
+                        response.sendRedirect("view/index.jsp?error=No se pudo eliminar el usuario.");
                         Logger.getLogger(userController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }
+                break;
+
+            case "Create":
+
+                try {
+                    String dni = request.getParameter("dni");
+                    String name = request.getParameter("name");
+                    String lastName = request.getParameter("lastName");
+                    String phoneNumber = request.getParameter("phoneNumber");
+                    String address = request.getParameter("address");
+                    String userName = request.getParameter("userName");
+                    int rolId = Integer.parseInt(request.getParameter("idrol"));
+                    String dateBirthStr = request.getParameter("dateBirth");
+
+                    if (dni == null || name == null || lastName == null || phoneNumber == null
+                            || address == null || userName == null || dateBirthStr == null
+                            || email == null || password == null
+                            || dni.isEmpty() || name.isEmpty() || lastName.isEmpty() || phoneNumber.isEmpty()
+                            || address.isEmpty() || userName.isEmpty() || dateBirthStr.isEmpty()
+                            || email.isEmpty() || password.isEmpty()) {
+
+                        response.sendRedirect("view/CreateUser.jsp?error=Todos los campos son obligatorios.");
+                        return;
+                    }
+
+                    // Validar que la fecha de nacimiento sea anterior a hoy
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    Date dateBirth = formatter.parse(dateBirthStr);
+                    Date today = new Date();
+
+                    if (dateBirth.after(today)) {
+                        response.sendRedirect("view/CreateUser.jsp?error=La fecha de nacimiento debe ser anterior a hoy.");
+                        return;
+                    }
+
+                    // Si pasa todas las validaciones, encriptamos la contraseña y creamos el usuario
+                    password = hashPasswordCreate(password);
+
+                    Rol rol = new Rol();
+                    rol.setId(rolId);
+
+                    User user = new User();
+                    user.setDni(dni);
+                    user.setName(name);
+                    user.setLastName(lastName);
+                    user.setPhoneNumber(phoneNumber);
+                    user.setAddress(address);
+                    user.setUserName(userName);
+                    user.setDateBirth(dateBirth);
+                    user.setEmail(email);
+                    user.setPassword(password);
+                    user.setRol(rol);
+
+                    createUser(user); // Método para guardar el usuario en la BD
+                    listUser = userJPA.findUserEntities();
+
+                    HttpSession session = request.getSession();
+                    session.setAttribute("listUser", listUser);
+
+                    response.sendRedirect("view/showUser.jsp?success=Usuario registrado exitosamente.");
+
+                } catch (ParseException e) {
+                    response.sendRedirect("view/CreateUser.jsp?error=Formato de fecha incorrecto.");
+                } catch (Exception ex) {
+                    response.sendRedirect("view/CreateUser.jsp?error=Error interno del servidor.");
                 }
                 break;
 
@@ -264,6 +331,12 @@ public class userController extends HttpServlet {
     }
 
     public String hashPassword(String password, String validatePassowrd) {
+        //Encrypt
+        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+        return passwordHash;
+    }
+
+    public String hashPasswordCreate(String password) {
         //Encrypt
         String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
         return passwordHash;
