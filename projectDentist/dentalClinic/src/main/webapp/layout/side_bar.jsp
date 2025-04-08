@@ -13,9 +13,9 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+            <i class="fa-solid fa-bandage"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">Clinic Ing <sup>s</sup></div>
     </a>
 
     <!-- Divider -->
@@ -40,52 +40,68 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Usuarios</span>
+            <i class="fas fa-user"></i>
+            <span>Users</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Opciones de usuarios:</h6>
-                <a class="collapse-item" href="../userController" name="action" value="verU" >Ver usuarios</a>
-                <a class="collapse-item" href="../view/CreateUser.jsp">Registrar usuarios</a>
+                <h6 class="collapse-header">User's options:</h6>
+                <a class="collapse-item" href="../userController" name="action" value="verU" >See users</a>
+                <a class="collapse-item" href="../view/CreateUser.jsp">Create users</a>
             </div>
         </div>
     </li>
-    
+
+    <!-- Nav Item - Dentist Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDentist"
+           aria-expanded="true" aria-controls="collapseDentist">
+            <i class="fas fa-tooth"></i>
+            <span>Dentists</span>
+        </a>
+        <div id="collapseDentist" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Dentist's options</h6>
+                <a class="collapse-item" href="../DentistsController" name="action" value="verU" >See dentists</a>
+                <a class="collapse-item" href="../view/CreateDentist.jsp">Create dentist</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Nav Item - Schedules Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSchedules"
            aria-expanded="true" aria-controls="collapseSchedules">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Horarios</span>
+            <i class="fas fa-clock"></i>
+            <span>Schedules</span>
         </a>
         <div id="collapseSchedules" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Opciones de horarios</h6>
-                <a class="collapse-item" href="../ScheduleController" name="action" value="verU" >Ver horarios</a>
-                <a class="collapse-item" href="../view/CreateSchedule.jsp">Registrar horarios</a>
+                <h6 class="collapse-header">Schedule's options</h6>
+                <a class="collapse-item" href="../ScheduleController" name="action" value="verU" >See schedules</a>
+                <a class="collapse-item" href="../view/CreateSchedule.jsp">Create schedules</a>
             </div>
         </div>
     </li>
-    
+
     <!-- Nav Item - Responsible Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseResposible"
            aria-expanded="true" aria-controls="collapseResposible">
-            <i class="fas fa-fw fa-cog"></i>
+            <i class="fas fa-user-check"></i>
             <span>Responsable</span>
         </a>
         <div id="collapseResposible" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Opciones de responsables</h6>
-                <a class="collapse-item" href="../ResponsibleController" name="action" value="verU" >Ver responsables</a>
-                <a class="collapse-item" href="../view/CreateResponsible.jsp">Registrar responsables</a>
+                <h6 class="collapse-header">Responsible's options</h6>
+                <a class="collapse-item" href="../ResponsibleController" name="action" value="verU" >See Responsibles</a>
+                <a class="collapse-item" href="../view/CreateResponsible.jsp">Create responsible</a>
             </div>
         </div>
     </li>
-    
 
-    <!-- Nav Item - Utilities Collapse Menu -->
+
+    <!-- Nav Item - Utilities Collapse Menu 
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
            aria-expanded="true" aria-controls="collapseUtilities">
@@ -107,12 +123,12 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
+    <!-- Heading
     <div class="sidebar-heading">
         Addons
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
+    <!-- Nav Item - Pages Collapse Menu 
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
            aria-expanded="true" aria-controls="collapsePages">
@@ -155,6 +171,6 @@
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
 
-  
+
 
 </ul>

@@ -20,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "secretary")
-public class Secretary extends Person implements Serializable {
+public class Secretary  implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

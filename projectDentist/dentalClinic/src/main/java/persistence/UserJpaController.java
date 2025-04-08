@@ -32,9 +32,9 @@ public class UserJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-    
-    public UserJpaController(){
-        emf=Persistence.createEntityManagerFactory("DentistPu");
+
+    public UserJpaController() {
+        emf = Persistence.createEntityManagerFactory("DentistPu");
     }
 
     public void create(User user) {
@@ -44,6 +44,21 @@ public class UserJpaController implements Serializable {
             em.getTransaction().begin();
             em.persist(user);
             em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public Integer createAndReturnId(User user) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(user); // Aquí JPA genera el ID (si está configurado como @GeneratedValue)
+            em.getTransaction().commit();
+            return user.getId(); // Retorna el ID del nuevo usuario
         } finally {
             if (em != null) {
                 em.close();

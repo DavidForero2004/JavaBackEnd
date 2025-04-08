@@ -5,6 +5,7 @@ persistence\ResponsibleJpaController.class
 model\Dentist.class
 model\User_.class
 persistence\exceptions\IllegalOrphanException.class
+controller\DentistController.class
 model\Rol.class
 model\Person.class
 model\Patient.class

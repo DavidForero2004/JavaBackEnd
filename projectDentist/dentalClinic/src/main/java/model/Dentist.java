@@ -21,7 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "dentist")
-public class Dentist extends Person implements Serializable {
+public class Dentist implements Serializable {
 
     @Column(name = "id")
     @Id
