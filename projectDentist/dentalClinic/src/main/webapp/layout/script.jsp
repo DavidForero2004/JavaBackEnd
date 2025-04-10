@@ -17,6 +17,7 @@
  <!-- Page level plugins -->
  <script src="${pageContext.request.contextPath}/styles/js/jquery.dataTables.min.js"></script>
  <script src="${pageContext.request.contextPath}/styles/js/dataTables.bootstrap4.min.js"></script>
+ <script src="${pageContext.request.contextPath}/styles/js/tableDentist.js"></script>
  
  <!-- Page level custom scripts -->
  <script src="${pageContext.request.contextPath}/styles/js/datatables-demo.js"></script>

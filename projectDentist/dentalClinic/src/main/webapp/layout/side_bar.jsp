@@ -62,8 +62,8 @@
         <div id="collapseDentist" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Dentist's options</h6>
-                <a class="collapse-item" href="../DentistsController" name="action" value="verU" >See dentists</a>
-                <a class="collapse-item" href="../view/CreateDentist.jsp">Create dentist</a>
+                 <a class="collapse-item" href="../DentistController?action=show">See dentist</a>
+                 <a class="collapse-item" href="../view/CreateDentist.jsp">Create dentist</a>
             </div>
         </div>
     </li>

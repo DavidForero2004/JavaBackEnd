@@ -4,13 +4,13 @@
     Author     : david
 --%>
 
+<%@page import="persistence.ScheduleJpaController"%>
 <%@page import="model.Schedule"%>
 <%@page import="java.util.List"%>
 <%@page import="controller.ScheduleController"%>
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Create dentist</h1>
-    <p class="mb-4">Form to create a dentist.</p>
+    <h1 class="h3 mb-2 text-gray-800" style="text-align: center;">Create dentist</h1>
 
     <form action="../DentistController" method="POST" class="createRForm">
         <div class="row">
@@ -48,15 +48,14 @@
             <div class="col-md-6 mb-3">
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" class="form-control" name="email" id="email" placeholder="Email">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="schedule" class="form-label">Schedule</label>
                 <select class="form-select" id="schedule" name="Schedule">
                     <%
-                        ScheduleController ControlS = new ScheduleController();
-                        List<Schedule> listSchedule = (List<Schedule>) session.getAttribute("listSchedule");
+                        ScheduleJpaController ControlS = new ScheduleJpaController();
+                        List<Schedule> listSchedule = ControlS.findScheduleEntities();
 
                         if (listSchedule != null && !listSchedule.isEmpty()) {
                             for (Schedule listS : listSchedule) {
@@ -68,7 +67,6 @@
                     %>
                 </select>
             </div>
-
             <div class="col-md-6 mb-3">
                 <label for="specialty" class="form-label">Specialty</label>
                 <select class="form-select" id="specialty" name="specialty">
@@ -82,6 +80,4 @@
             <button type="submit" name="action" value="create" class="btn btn-primary">Register</button>
         </div>
     </form>
-
-
 </div>

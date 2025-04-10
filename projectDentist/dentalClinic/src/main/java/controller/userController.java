@@ -88,42 +88,19 @@ public class userController extends HttpServlet {
                     }
 
                     // Validar que la fecha de nacimiento sea anterior a hoy
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    Date dateBirth = formatter.parse(dateBirthStr);
+                    Date dateBirth = convertDate(dateBirthStr);
                     Date today = new Date();
-
                     if (dateBirth.after(today)) {
                         response.sendRedirect("login.jsp?error=La fecha de nacimiento debe ser anterior a hoy.");
                         return;
                     }
 
-                    // Si pasa todas las validaciones, encriptamos la contraseña y creamos el usuario
-                    password = hashPassword(password, passwordRpd); // Asegúrate de que este método encripte bien la contraseña
-
-                    
-                    Rol rol = new Rol();
-                    rol.setId(1);
-
-                    User user = new User();
-
-                    user.setDni(dni);
-                    user.setName(name);
-                    user.setLastName(lastName);
-                    user.setPhoneNumber(phoneNumber);
-                    user.setAddress(address);
-                    user.setUserName(userName);
-                    user.setDateBirth(dateBirth);
-                    user.setEmail(email);
-                    user.setPassword(password);
-                    user.setRol(rol);
-
-                    createUser(user); // Método para guardar el usuario en la BD
-
+                 
+                    createUser(dni, name, lastName, phoneNumber, address, dateBirthStr, email, userName, password, 1);
                     response.sendRedirect("login.jsp?success=Usuario registrado exitosamente.");
 
-                } catch (ParseException e) {
-                    response.sendRedirect("login.jsp?error=Formato de fecha incorrecto.");
-                } catch (Exception ex) {
+                } catch (IOException ex) {
+                    System.out.println(ex);
                     response.sendRedirect("login.jsp?error=Error interno del servidor.");
                 }
                 break;
@@ -154,15 +131,12 @@ public class userController extends HttpServlet {
             case "edit":
 
                 try {
-
                     int id = Integer.parseInt(request.getParameter("id_usuarioEditar"));
                     User user = userJPA.findUser(id);
-
                     if (user == null) {
                         response.sendRedirect("view/index.jsp?error=Usuario no encontrado.");
                         return;
                     }
-
                     String dni = request.getParameter("dniEdit");
                     String name = request.getParameter("nameEdit");
                     String lastName = request.getParameter("lastNameEdit");
@@ -172,24 +146,10 @@ public class userController extends HttpServlet {
                     String dateBirthStr = request.getParameter("dateBirthEdit");
                     String emailEdit = request.getParameter("emailEdit");
                     int rolId = Integer.parseInt(request.getParameter("idrol"));
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    Date dateBirth = formatter.parse(dateBirthStr);
+                    Date dateBirth = convertDate(dateBirthStr);
+                    password = hashPassword(password);
+                    editUser(id, dni, name, lastName, phoneNumber, address, dateBirth, emailEdit, userName, password, rolId);
 
-                    user.setId(id);
-                    Rol rol = new Rol();
-                    rol.setId(rolId);
-
-                    user.setDni(dni);
-                    user.setName(name);
-                    user.setLastName(lastName);
-                    user.setPhoneNumber(phoneNumber);
-                    user.setAddress(address);
-                    user.setUserName(userName);
-                    user.setDateBirth(dateBirth);
-                    user.setEmail(emailEdit);
-                    user.setRol(rol);
-
-                    userJPA.edit(user);
                     /*volver a recargar los usuarios*/
                     listUser = userJPA.findUserEntities();
 
@@ -256,36 +216,16 @@ public class userController extends HttpServlet {
                         response.sendRedirect("view/CreateUser.jsp?error=La fecha de nacimiento debe ser anterior a hoy.");
                         return;
                     }
-
-                    // Si pasa todas las validaciones, encriptamos la contraseña y creamos el usuario
-                    password = hashPasswordCreate(password);
-
-                    Rol rol = new Rol();
-                    rol.setId(rolId);
-
-                    User user = new User();
-                    user.setDni(dni);
-                    user.setName(name);
-                    user.setLastName(lastName);
-                    user.setPhoneNumber(phoneNumber);
-                    user.setAddress(address);
-                    user.setUserName(userName);
-                    user.setDateBirth(dateBirth);
-                    user.setEmail(email);
-                    user.setPassword(password);
-                    user.setRol(rol);
-
-                    createUser(user); // Método para guardar el usuario en la BD
+                 
+                    createUser(dni, name, lastName, phoneNumber, address, dateBirthStr, email, userName, password, rolId);
                     listUser = userJPA.findUserEntities();
-
                     HttpSession session = request.getSession();
                     session.setAttribute("listUser", listUser);
-
                     response.sendRedirect("view/showUser.jsp?success=Usuario registrado exitosamente.");
 
                 } catch (ParseException e) {
                     response.sendRedirect("view/CreateUser.jsp?error=Formato de fecha incorrecto.");
-                } catch (Exception ex) {
+                } catch (IOException | NumberFormatException ex) {
                     response.sendRedirect("view/CreateUser.jsp?error=Error interno del servidor.");
                 }
                 break;
@@ -330,32 +270,96 @@ public class userController extends HttpServlet {
         response.sendRedirect("login.jsp");
     }
 
-    public String hashPassword(String password, String validatePassowrd) {
-        //Encrypt
-        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-        return passwordHash;
-    }
-
-    public String hashPasswordCreate(String password) {
-        //Encrypt
-        String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
-        return passwordHash;
-    }
-
     public List<User> listUser() {
         return userJPA.findUserEntities();
     }
 
-    public User getUser(int id_editar) {
-        return userJPA.findUser(id_editar);
+  
+    public int createUser(String dni, String name, String lastName, String phoneNumber, String address, String dateBirth, String email, String userName, String password, int Rol) {
+
+        /*
+            1: Paciente, 
+            2: Responsable, 
+            3: dentista, 
+            4: secretaria, 
+            5: admin
+         */
+        //validar que no devuelva Invalid (Falta)
+        String passwordHash = hashPassword(password);
+        //validar que no devuelva null (Falta)
+        Date birthDate = convertDate(dateBirth);
+
+        Rol rol = new Rol();
+        rol.setId(Rol);
+
+        try {
+            /*10 datos para crear un usuario*/
+            User user = new User();
+            user.setDni(dni);
+            user.setName(name);
+            user.setLastName(lastName);
+            user.setPhoneNumber(phoneNumber);
+            user.setAddress(address);
+            user.setUserName(userName);
+            user.setDateBirth(birthDate);
+            user.setEmail(email);
+            user.setPassword(passwordHash);
+            user.setRol(rol);
+
+            return userJPA.createAndReturnId(user);
+        } catch (Error err) {
+            System.out.println(err);
+            return 0;
+        }
     }
 
-    public void editUser(User user) {
+    public String hashPassword(String password) {
         try {
-            userJPA.edit(user);
-        } catch (Exception ex) {
-            Logger.getLogger(userController.class.getName()).log(Level.SEVERE, null, ex);
+            //Encrypt
+            String passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+            return passwordHash;
+        } catch (Error err) {
+            System.out.println(err);
+            return "Invalid";
         }
+    }
+
+    public Date convertDate(String date) {
+        try {
+            // Validar que la fecha de nacimiento sea anterior a hoy
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date dateBirth = formatter.parse(date);
+            return dateBirth;
+        } catch (ParseException ex) {
+            System.out.println(ex);
+            return null;
+        }
+    }
+
+    public boolean editUser(int id, String dni, String name, String lastName, String phoneNumber, String address, Date dateBirth, String email, String userName, String password, int rol) throws Exception {
+        try {
+            User user = new User();
+            Rol rolId = new Rol();
+            rolId.setId(rol);
+
+            user.setId(id);
+            user.setDni(dni);
+            user.setName(name);
+            user.setLastName(lastName);
+            user.setPhoneNumber(phoneNumber);
+            user.setAddress(address);
+            user.setUserName(userName);
+            user.setDateBirth(dateBirth);
+            user.setEmail(email);
+            user.setRol(rolId);
+
+            userJPA.edit(user);
+            return true;
+        } catch (IOException ex) {
+            System.out.println("1" + ex);
+            return false;
+        }
+
     }
 
     @Override
