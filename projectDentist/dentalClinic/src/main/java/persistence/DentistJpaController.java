@@ -32,7 +32,7 @@ public class DentistJpaController implements Serializable {
     }
     
     public DentistJpaController(){
-        emf=Persistence.createEntityManagerFactory("DentistPu");
+        emf=Persistence.createEntityManagerFactory("DentistPU");
     }
 
     public void create(Dentist dentist) {

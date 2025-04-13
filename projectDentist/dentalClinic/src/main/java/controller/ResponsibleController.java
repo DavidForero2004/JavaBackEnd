@@ -18,7 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Responsible;
+import model.Rol;
+import model.User;
 import persistence.ResponsibleJpaController;
+import persistence.UserJpaController;
 import persistence.exceptions.NonexistentEntityException;
 
 /**
@@ -29,6 +32,8 @@ import persistence.exceptions.NonexistentEntityException;
 public class ResponsibleController extends HttpServlet {
 
     ResponsibleJpaController responsibleJPA = new ResponsibleJpaController();
+    UserJpaController userJPA = new UserJpaController();
+    userController userController = new userController();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,11 +44,13 @@ public class ResponsibleController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Responsible> listResponsible = listResponsible();
-        HttpSession misession = request.getSession();
-        misession.setAttribute("listResponsible", listResponsible);
-
-        response.sendRedirect("view/ShowResponsible.jsp");
+        String action = request.getParameter("action");
+        if ("show".equals(action)) {
+            List<Responsible> listResponsible = responsibleJPA.findResponsibleEntities();
+            HttpSession misession = request.getSession();
+            misession.setAttribute("list", listResponsible);
+            response.sendRedirect("view/ShowResponsible.jsp");
+        }
 
     }
 
@@ -52,119 +59,81 @@ public class ResponsibleController extends HttpServlet {
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
-        List<Responsible> listResponsible = responsibleJPA.findResponsibleEntities();
 
         switch (action) {
-            case "Create":
+            case "create":
 
-                try {
-                    String dni = request.getParameter("dni");
-                    String name = request.getParameter("name");
-                    String lastName = request.getParameter("lastName");
-                    String phoneNumber = request.getParameter("phoneNumber");
-                    String address = request.getParameter("address");
-                    String email = request.getParameter("email");
-                    String dateBirthStr = request.getParameter("dateBirth");
-                    String typeResponsible = request.getParameter("typeResponsible");
+                String dni = request.getParameter("dni");
+                String name = request.getParameter("name");
+                String lastName = request.getParameter("lastName");
+                String phoneNumber = request.getParameter("phoneNumber");
+                String address = request.getParameter("address");
+                String userName = request.getParameter("userName");
+                String email = request.getParameter("email");
+                String dateBirthStr = request.getParameter("dateBirth");
+                String typeResponsible = request.getParameter("typeResponsible");
 
-                    // Validar que la fecha de nacimiento sea anterior a hoy
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    Date dateBirth = formatter.parse(dateBirthStr);
-                    Date today = new Date();
+                int id_user = userController.createUser(dni, name, lastName, phoneNumber, address, dateBirthStr, email, userName, dni, 2);
 
-                    if (dateBirth.after(today)) {
-                        response.sendRedirect("view/CreateResponsible.jsp?error=La fecha de nacimiento debe ser anterior a hoy.");
-                        return;
-                    }
+                boolean iscorrect = createResponsible(typeResponsible, id_user);
 
-                    Responsible responsible = new Responsible();
-                    responsible.setDni(dni);
-                    responsible.setName(name);
-                    responsible.setLastName(lastName);
-                    responsible.setPhoneNumber(phoneNumber);
-                    responsible.setAddress(address);
-                    responsible.setEmail(email);
-                    responsible.setDateBirth(dateBirth);
-                    responsible.setType(typeResponsible);
-                    createSchedule(responsible);
-
-                    listResponsible = responsibleJPA.findResponsibleEntities();
-                    HttpSession session = request.getSession();
-                    session.setAttribute("listResponsible", listResponsible);
-
+                if (iscorrect) {
+                    responsibleJPA.findResponsibleEntities();
+                    List<Responsible> listResponsible = responsibleJPA.findResponsibleEntities();
+                    HttpSession misession = request.getSession();
+                    misession.setAttribute("list", listResponsible);
                     response.sendRedirect("view/ShowResponsible.jsp?success=Responsable registrado exitosamente.");
-
-                } catch (Exception e) {
                 }
+
                 break;
 
-            case "Edit":
+            case "edit":
                 try {
-                    int id = Integer.parseInt(request.getParameter("id_responsableEditar"));
-                    Responsible responsible = getResponsible(id);
+                    int idUser = Integer.parseInt(request.getParameter("id_responsibleEditar"));
 
-                    if (responsible == null) {
-                        response.sendRedirect("view/index.jsp?error=Responsable no encontrado.");
-                        return;
+                    String dniEdit = request.getParameter("dniEdit");
+                    String nameEdit = request.getParameter("nameEdit");
+                    String lastNameEdit = request.getParameter("lastNameEdit");
+                    String phoneNumberEdit = request.getParameter("phoneNumberEdit");
+                    String addressEdit = request.getParameter("addressEdit");
+                    String userNameEdit = request.getParameter("userNameEdit");
+                    String emailEdit = request.getParameter("emailEdit");
+                    String dateBirthEdit = request.getParameter("dateBirthEdit");
+                    String passwordEdit = dniEdit;
+
+                    int id_responsibleEdit = Integer.parseInt(request.getParameter("id_responsibleEditM"));
+                    String typeResponsibleEdit = request.getParameter("typeResponsibleEdit");
+
+                    boolean isEdit = editResponsible(idUser, dniEdit, nameEdit, lastNameEdit, phoneNumberEdit, addressEdit, dateBirthEdit, emailEdit, userNameEdit, passwordEdit, 2, typeResponsibleEdit, id_responsibleEdit);
+
+                    if (isEdit) {
+                        responsibleJPA.findResponsibleEntities();
+                        List<Responsible> listResponsible = responsibleJPA.findResponsibleEntities();
+                        HttpSession misession = request.getSession();
+                        misession.setAttribute("list", listResponsible);
+                        response.sendRedirect("view/ShowResponsible.jsp?success=Responsable Editado exitosamente.");
                     }
-
-                    String dni = request.getParameter("dniEdit");
-                    String name = request.getParameter("nameEdit");
-                    String lastName = request.getParameter("lastNameEdit");
-                    String phoneNumber = request.getParameter("phoneNumberEdit");
-                    String address = request.getParameter("addressEdit");
-                    String email = request.getParameter("emailEdit");
-                    String dateBirthStr = request.getParameter("dateBirthEdit");
-                    String typeResponsible = request.getParameter("typeResponsibleEdit");
-
-                    // Validar que la fecha de nacimiento sea anterior a hoy
-                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    Date dateBirth = formatter.parse(dateBirthStr);
-                    Date today = new Date();
-
-                    if (dateBirth.after(today)) {
-                        response.sendRedirect("view/ShowSchedule.jsp?error=La fecha de nacimiento debe ser anterior a hoy.");
-                        return;
-                    }
-
-                    responsible.setId(id);
-                    responsible.setDni(dni);
-                    responsible.setName(name);
-                    responsible.setLastName(lastName);
-                    responsible.setPhoneNumber(phoneNumber);
-                    responsible.setAddress(address);
-                    responsible.setEmail(email);
-                    responsible.setDateBirth(dateBirth);
-                    responsible.setType(typeResponsible);
-
-                    editResponsible(responsible);
-
-                    listResponsible = responsibleJPA.findResponsibleEntities();
-                    HttpSession session = request.getSession();
-                    session.setAttribute("listResponsible", listResponsible);
-                    response.sendRedirect("view/ShowResponsible.jsp?success=Responsable editado exitosamente.");
-
-                } catch (NumberFormatException e) {
-                    System.out.println(e);
-                    response.sendRedirect("view/ShowResponsible.jsp?error=Error en los datos del responsable.");
-                } catch (Exception ex) {
+                }  catch (Exception ex) {
                     System.out.println(ex);
                     response.sendRedirect("view/ShowResponsible.jsp?error=No se pudo editar el responsable.");
                 }
 
                 break;
 
-            case "Delete":
+            case "delete":
 
-                int id = Integer.parseInt(request.getParameter("id_responsableEliminar"));
+                int idUserD = Integer.parseInt(request.getParameter("id_usuarioEliminar"));
+                int idResponsibleD = Integer.parseInt(request.getParameter("id_ResponsibleEliminar"));
 
-                deleteResposible(id);
+                boolean isDelete = deleteCascading(idUserD, idResponsibleD);
 
-                listResponsible = responsibleJPA.findResponsibleEntities();
-                HttpSession session = request.getSession();
-                session.setAttribute("listResponsible", listResponsible);
-                response.sendRedirect("view/ShowResponsible.jsp?success=Responsable eliminado exitosamente.");
-
+                if (isDelete) {
+                    responsibleJPA.findResponsibleEntities();
+                    List<Responsible> listResponsible = responsibleJPA.findResponsibleEntities();
+                    HttpSession misession = request.getSession();
+                    misession.setAttribute("list", listResponsible);
+                    response.sendRedirect("view/ShowResponsible.jsp?success=Responsable eliminado exitosamente.");
+                }
                 break;
             default:
                 throw new AssertionError();
@@ -172,33 +141,85 @@ public class ResponsibleController extends HttpServlet {
 
     }
 
-    public List<Responsible> listResponsible() {
-        return responsibleJPA.findResponsibleEntities();
-    }
+    protected boolean createResponsible(String typeResponsible, int id_user) {
 
-    protected void createSchedule(Responsible responsible) {
-        responsibleJPA.create(responsible);
-    }
+        Responsible responsible = new Responsible();
+        User user = new User();
 
-    public Responsible getResponsible(int id_editar) {
-        return responsibleJPA.findResponsible(id_editar);
-    }
-
-    public void editResponsible(Responsible responsible) {
         try {
-            responsibleJPA.edit(responsible);
-        } catch (Exception ex) {
-            Logger.getLogger(ScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+
+            user.setId(id_user);
+            responsible.setType(typeResponsible);
+            responsible.setUser(user);
+            responsibleJPA.create(responsible);
+            return true;
+
+        } catch (Error err) {
+            System.out.println(err);
+            return false;
         }
+
     }
 
-    public void deleteResposible(int id_eliminar) {
-        try {
-            responsibleJPA.destroy(id_eliminar);
-        } catch (NonexistentEntityException ex) {
+    protected boolean editResponsible(int id, String dni, String name, String lastName, String phoneNumber, String address, String dateBirth, String email, String userName, String password, int Rol, String typeResponsible, int id_responsible) throws Exception {
 
-            Logger.getLogger(ScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+        String passwordHash = userController.hashPassword(password);
+        Date birthDate = userController.convertDate(dateBirth);
+
+        Rol rol = new Rol();
+        rol.setId(Rol);
+
+        try {
+
+            User user = new User();
+            user.setId(id);
+            user.setDni(dni);
+            user.setName(name);
+            user.setLastName(lastName);
+            user.setPhoneNumber(phoneNumber);
+            user.setAddress(address);
+            user.setUserName(userName);
+            user.setDateBirth(birthDate);
+            user.setEmail(email);
+            user.setPassword(passwordHash);
+            user.setRol(rol);
+            userJPA.edit(user);
+
+            try {
+                
+                Responsible responsible = new Responsible();
+
+                responsible.setId(id_responsible);
+                responsible.setType(typeResponsible);
+                responsible.setUser(user);
+
+                responsibleJPA.edit(responsible);
+
+            } catch (Error err) {
+                System.out.println(err);
+                return false;
+            }
+
+            return true;
+
+        } catch (Error err) {
+            System.out.println("err");
+            return false;
         }
+
+    }
+
+    protected boolean deleteCascading(int idUser, int idDentist) {
+
+        try {
+            responsibleJPA.destroy(idDentist);
+            userJPA.destroy(idUser);
+            return true;
+        } catch (Exception err) {
+            System.out.println(err);
+            return false;
+        }
+
     }
 
     @Override

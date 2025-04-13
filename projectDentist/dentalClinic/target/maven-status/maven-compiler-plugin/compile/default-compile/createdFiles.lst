@@ -7,6 +7,7 @@ model\User_.class
 persistence\exceptions\IllegalOrphanException.class
 controller\DentistController.class
 model\Rol.class
+controller\SecretaryController.class
 model\Person.class
 model\Patient.class
 model\Responsible.class
@@ -29,6 +30,7 @@ controller\ScheduleController.class
 persistence\DentistJpaController.class
 model\Secretary_.class
 persistence\TurnJpaController.class
+controller\PatientController.class
 model\Schedule_.class
 model\Person_.class
 persistence\RolJpaController.class

@@ -280,9 +280,9 @@ public class userController extends HttpServlet {
         /*
             1: Paciente, 
             2: Responsable, 
-            3: dentista, 
+            3: Dentista, 
             4: secretaria, 
-            5: admin
+            5: Admin
          */
         //validar que no devuelva Invalid (Falta)
         String passwordHash = hashPassword(password);

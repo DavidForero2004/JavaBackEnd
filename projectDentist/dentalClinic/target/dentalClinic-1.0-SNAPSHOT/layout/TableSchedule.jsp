@@ -8,11 +8,11 @@
 <%@page import="java.util.List"%>
 <%@page import="controller.ScheduleController"%>
 <div class="container-fluid">
-    
+
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Lista de horarios</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Schedule´s List</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -37,13 +37,13 @@
                         %>
                         <tr>
                             <td><%=cont%></td>
-                            <td><%=listS.getStartTime() %></td>
-                            <td><%=listS.getEndTime() %></td>
+                            <td><%=listS.getStartTime()%></td>
+                            <td><%=listS.getEndTime()%></td>
                             <td>
                                 <a href="#" class="editU" data-toggle="modal" data-target="#editEmployeeModal"
-                                   data-id="<%=listS.getId() %>"
-                                   data-starttime="<%=listS.getStartTime() %>"
-                                   data-endtime="<%=listS.getEndTime() %>"                                
+                                   data-id="<%=listS.getId()%>"
+                                   data-starttime="<%=listS.getStartTime()%>"
+                                   data-endtime="<%=listS.getEndTime()%>"                                
                                    <i class="material-icons" data-toggle="tooltip" title="Edit" style="color: greenyellow;">&#xE254;</i>
                                 </a >
                                 <a href="#deleteEmployeeModal" class="deleteU" data-toggle="modal" data-id="<%=listS.getId()%>">
@@ -71,7 +71,7 @@
             <div class="modal-content">
                 <form action="../ScheduleController" method="POST">
                     <div class="modal-header">						
-                        <h4 class="modal-title">Editar horario</h4>
+                        <h4 class="modal-title">Edit schedule</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">					
@@ -86,7 +86,7 @@
                         </div>                       
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-info" name="action" value="Edit" >Editar</button>
+                        <button type="submit" class="btn btn-info" name="action" value="Edit" >Edit</button>
                     </div>
                 </form>
 
@@ -99,14 +99,15 @@
             <div class="modal-content">
                 <form action="../ScheduleController" method="POST">
                     <div class="modal-header">						
-                        <h4 class="modal-title">Eliminar horario</h4>
+                        <h4 class="modal-title">Delete schedule</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <input type="hidden" id="editId" name="id_horarioEliminar">
                     <div class="modal-body">					
-                        <p>¿Esta seguro de eliminar este dato?</p>
-                        <p class="text-warning"><small>!Esta acción no se puede deshacer¡.</small></p>
+                        <p>Are you sure you want to delete this schedule?</p>
+                        <p class="text-warning"><small>This action cannot be undone!</small></p>
                     </div>
+
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                         <input type="submit" class="btn btn-danger" name="action" value="Delete">
@@ -116,5 +117,5 @@
         </div>
     </div>
 </div>
-    
+
 

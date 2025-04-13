@@ -32,7 +32,7 @@ public class ResponsibleJpaController implements Serializable {
     }
     
     public ResponsibleJpaController(){
-        emf=Persistence.createEntityManagerFactory("DentistPu");
+        emf=Persistence.createEntityManagerFactory("DentistPU");
     }
 
     public void create(Responsible responsible) {

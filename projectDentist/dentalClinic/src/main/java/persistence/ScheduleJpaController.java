@@ -32,7 +32,7 @@ public class ScheduleJpaController implements Serializable {
     }
     
     public ScheduleJpaController(){
-        emf=Persistence.createEntityManagerFactory("DentistPu");
+        emf=Persistence.createEntityManagerFactory("DentistPU");
     }
 
     public void create(Schedule schedule) {

@@ -43,9 +43,12 @@ $(document).ready(function () {
     });
 
     // Botón de eliminar dentist
-    $(".deleteU").click(function () {
-        let id = $(this).data("id");
-        $("#deleteDentistModal input[name='id_dentistEliminar']").val(id);
+    $(".deleteD").click(function () {
+        let idu = $(this).data("idu");
+        let idd = $(this).data("idd");
+        
+        $("#deleteDentistModal input[name='id_usuarioEliminar']").val(idu);
+        $("#deleteDentistModal input[name='id_dentistEliminar']").val(idd);
     });
 
     // Envío de formulario de edición

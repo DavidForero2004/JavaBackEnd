@@ -4,6 +4,7 @@
     Author     : david
 --%>
 
+<%@page import="model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -35,7 +36,7 @@
     <div class="sidebar-heading">
         Interface
     </div>
-
+    <% if (RolType == 5) { %>
     <!-- Nav Item - Users Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -62,11 +63,44 @@
         <div id="collapseDentist" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Dentist's options</h6>
-                 <a class="collapse-item" href="../DentistController?action=show">See dentist</a>
-                 <a class="collapse-item" href="../view/CreateDentist.jsp">Create dentist</a>
+                <a class="collapse-item" href="../DentistController?action=show">See dentist</a>
+                <a class="collapse-item" href="../view/CreateDentist.jsp">Create dentist</a>
             </div>
         </div>
     </li>
+
+    <!-- Nav Item - Secretary Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSecretary"
+           aria-expanded="true" aria-controls="collapseSecretary">
+            <i class="fa-solid fa-user-tie"></i>
+            <span>Secretary</span>
+        </a>
+        <div id="collapseSecretary" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Secretary's options</h6>
+                <a class="collapse-item" href="../SecretaryController?action=show" name="action" value="verU" >See secretaries</a>
+                <a class="collapse-item" href="../view/CreateSecretary.jsp">Create secretary</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Patient Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePatient"
+           aria-expanded="true" aria-controls="collapsePatient">
+            <i class="fa-solid fa-user-tie"></i>
+            <span>Patient</span>
+        </a>
+        <div id="collapsePatient" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Patient's options</h6>
+                <a class="collapse-item" href="../PatientController?action=show" name="action" value="verU" >See Patients</a>
+                <a class="collapse-item" href="../view/CreatePatient.jsp">Create patient</a>
+            </div>
+        </div>
+    </li>
+
 
     <!-- Nav Item - Schedules Collapse Menu -->
     <li class="nav-item">
@@ -78,7 +112,7 @@
         <div id="collapseSchedules" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Schedule's options</h6>
-                <a class="collapse-item" href="../ScheduleController" name="action" value="verU" >See schedules</a>
+                <a class="collapse-item" href="../ScheduleController?action=show" name="action" value="verU" >See schedules</a>
                 <a class="collapse-item" href="../view/CreateSchedule.jsp">Create schedules</a>
             </div>
         </div>
@@ -88,13 +122,13 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseResposible"
            aria-expanded="true" aria-controls="collapseResposible">
-            <i class="fas fa-user-check"></i>
+            <i class="fa-solid fa-users"></i>
             <span>Responsable</span>
         </a>
         <div id="collapseResposible" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Responsible's options</h6>
-                <a class="collapse-item" href="../ResponsibleController" name="action" value="verU" >See Responsibles</a>
+                <a class="collapse-item" href="../ResponsibleController?action=show" name="action" value="verU" >See Responsibles</a>
                 <a class="collapse-item" href="../view/CreateResponsible.jsp">Create responsible</a>
             </div>
         </div>
@@ -171,6 +205,6 @@
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
 
-
+    <%}%>
 
 </ul>

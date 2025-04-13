@@ -32,7 +32,7 @@ public class TurnJpaController implements Serializable {
     }
     
     public TurnJpaController(){
-        emf=Persistence.createEntityManagerFactory("DentistPu");
+        emf=Persistence.createEntityManagerFactory("DentistPU");
     }
 
     public void create(Turn turn) {

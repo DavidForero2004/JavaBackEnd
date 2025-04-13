@@ -34,7 +34,7 @@ public class UserJpaController implements Serializable {
     }
 
     public UserJpaController() {
-        emf = Persistence.createEntityManagerFactory("DentistPu");
+        emf = Persistence.createEntityManagerFactory("DentistPU");
     }
 
     public void create(User user) {

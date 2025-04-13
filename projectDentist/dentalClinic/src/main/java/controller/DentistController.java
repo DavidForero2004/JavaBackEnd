@@ -118,12 +118,24 @@ public class DentistController extends HttpServlet {
 
                 }
                 break;
+            case "delete":
+
+                int idUsuarioD = Integer.parseInt(request.getParameter("id_usuarioEliminar"));
+                int idDentistD = Integer.parseInt(request.getParameter("id_dentistEliminar"));
+
+                boolean isDelete = deleteCascading(idUsuarioD, idDentistD);
+                if (isDelete) {
+                    List<Dentist> listDentist = dentistJPA.findDentistEntities();
+                    HttpSession misession = request.getSession();
+                    misession.setAttribute("list", listDentist);
+                    response.sendRedirect("view/ShowDentist.jsp");
+                }
+                break;
             default:
                 throw new AssertionError();
         }
 
     }
-
 
     protected boolean createDentist(String specialty, int id_schedule, int id_user) {
 
@@ -152,7 +164,7 @@ public class DentistController extends HttpServlet {
 
     protected boolean editUser(int id, String dni, String name, String lastName, String phoneNumber, String address, String dateBirth, String email, String userName, String password, int Rol, int id_dentist, int Schedule_id, String specialtyEdit) throws Exception {
         //validar que no devuelva Invalid (Falta)
-        String passwordHash =  userController.hashPassword(password);
+        String passwordHash = userController.hashPassword(password);
         //validar que no devuelva null (Falta)
         Date birthDate = userController.convertDate(dateBirth);
 
@@ -201,9 +213,17 @@ public class DentistController extends HttpServlet {
 
     }
 
-    
+    protected boolean deleteCascading(int idUsuario, int idDentist) {
+        try {         
+            dentistJPA.destroy(idDentist);
+            userJPA.destroy(idUsuario);
+            return true;
+        } catch (Exception err) {
+            System.out.println(err);
+            return false;
+        }
+    }
 
- 
     @Override
     public String getServletInfo() {
         return "Short description";

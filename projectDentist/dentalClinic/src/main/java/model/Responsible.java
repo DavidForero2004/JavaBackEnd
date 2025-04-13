@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -18,7 +20,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "resposible")
-public class Responsible extends Person implements Serializable {
+public class Responsible implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -27,13 +29,19 @@ public class Responsible extends Person implements Serializable {
     private int id;
     @Column(name = "type")
     private String type;
+    
+    @OneToOne
+    @JoinColumn(name = "id_user", nullable = false)
+    private User user;
+
 
     public Responsible() {
     }
 
-    public Responsible(int id, String type) {
+    public Responsible(int id, String type, User user) {
         this.id = id;
         this.type = type;
+        this.user = user;
     }
 
     public int getId() {
@@ -51,7 +59,14 @@ public class Responsible extends Person implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-    
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
  
 
     @Override

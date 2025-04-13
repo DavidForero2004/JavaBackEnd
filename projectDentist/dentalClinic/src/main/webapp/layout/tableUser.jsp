@@ -14,14 +14,10 @@
 
 <div class="container-fluid">
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Ver usuarios</h1>
-    <p class="mb-4">Lista de los usuarios que estan creados.</p>
-
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Lista de usuarios</h6>
+            <h6 class="m-0 font-weight-bold text-primary" style="text-align: center">User's list</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -30,13 +26,13 @@
                         <tr>
                             <th>Id</th>
                             <th>Dni</th>
-                            <th>User Name</th>
-                            <th>Name</th>
-                            <th>Last Name</th>
+                            <th>User name</th>
+                            <th>First name</th>
+                            <th>Last name</th>
                             <th>Phone number</th>
-                            <th>address</th>
-                            <th>email</th>
-                            <th>Date Birth</th>
+                            <th>Address</th>
+                            <th>Email</th>
+                            <th>Birth date</th>
                             <th>Rol</th>
                             <th>Action</th>
                         </tr>
@@ -63,9 +59,9 @@
                             <%
                                 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
                                 sdf.setTimeZone(java.util.TimeZone.getTimeZone("America/Bogota")); // o tu zona local
-                            %>
+%>
                             <td><%= (listU.getDateBirth() != null) ? sdf.format(listU.getDateBirth()) : ""%></td>
-                            <td><%=listU.getRol().getName() %> </td>
+                            <td><%=listU.getRol().getName()%> </td>
                             <td>
                                 <a href="#" class="editU" data-toggle="modal" data-target="#editEmployeeModal"
                                    data-id="<%=listU.getId()%>"
@@ -98,32 +94,31 @@
             </div>
         </div>
     </div>
-
     <!-- Edit Modal HTML -->
     <div id="editEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="../userController" method="POST">
                     <div class="modal-header">						
-                        <h4 class="modal-title">Editar Usuario</h4>
+                        <h4 class="modal-title">Edit user</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">					
                         <input type="hidden" id="editId" name="id_usuarioEditar">
                         <div class="form-group">
-                            <label>DNI</label>
+                            <label>Dni</label>
                             <input type="text" class="form-control" id="editDni" name="dniEdit" required>
                         </div>
                         <div class="form-group">
-                            <label>User Name</label>
+                            <label>User name</label>
                             <input type="text" class="form-control" id="editUsername" name="usernameedit" required>
                         </div>
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>First name</label>
                             <input type="text" class="form-control" id="editName" name="nameEdit" required>
                         </div>
                         <div class="form-group">
-                            <label>Last Name</label>
+                            <label>Last name</label>
                             <input type="text" class="form-control" id="editPhoneNumber" name="lastNameEdit" required>
                         </div>	
                         <div class="form-group">
@@ -139,47 +134,45 @@
                             <input type="text" class="form-control" id="editEmail" name="emailEdit" required>
                         </div>
                         <div class="form-group">
-                            <label>Date Birth</label>
+                            <label>Date of Birth</label>
                             <input type="date" class="form-control" id="editDateBirth" name="dateBirthEdit" required>
                         </div>
                         <div class="form-group">
                             <label>Rol</label>
-                            <select name="idrol">
+                            <select name="idrol" class="form-control">
                                 <% rolController rolControl = new rolController();
                                     List<Rol> listRol = rolControl.listRol();
 
                                     if (listRol != null) {
                                         for (Rol rol : listRol) {
-
-
                                 %>
                                 <option value="<%=rol.getId()%>"><%=rol.getName()%> </option>
                                 <% }
-                                    }%>
+                                }%>
                             </select>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-info" name="action" value="edit" >Editar</button>
+                        <button type="submit" class="btn btn-info" name="action" value="edit">Edit</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
+
     <!-- Delete Modal HTML -->
     <div id="deleteEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="../userController" method="POST">
                     <div class="modal-header">						
-                        <h4 class="modal-title">Eliminar Usuario</h4>
+                        <h4 class="modal-title">Delete user</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <input type="hidden" id="editId" name="id_usuarioEliminar">
                     <div class="modal-body">					
-                        <p>¿Esta seguro de eliminar este dato?</p>
-                        <p class="text-warning"><small>!Esta acción no se puede deshacer¡.</small></p>
+                        <p>Are you sure you want to delete this user?</p>
+                        <p class="text-warning"><small>This action cannot be undone!</small></p>
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -189,5 +182,3 @@
             </div>
         </div>
     </div>
-</div>
-

@@ -8,7 +8,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Lista de dentistas</h6>
+            <h6 class="m-0 font-weight-bold text-primary" style="text-align: center">Dentist´s List</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -17,10 +17,10 @@
                         <tr>
                             <th>Id</th>
                             <th>Dni</th>
-                            <th>Name</th>
-                            <th>Last Name</th>
-                            <th>User Name</th>
-                            <th>Phone Number</th>                            
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>User name</th>
+                            <th>Phone number</th>                            
                             <th>Address</th>
                             <th>Date Birth</th>
                             <th>Email</th>
@@ -69,11 +69,12 @@
                                    data-email="<%=list.getUser().getEmail()%>"
                                    data-specialty="<%=list.getSpecialty()%>"
                                    data-schedule="<%=list.getSchedule().getId()%>"
-                                   data-iddentist="<%=list.getId()%>"
-                                   >
+                                   data-iddentist="<%=list.getId()%>" >
                                     <i class="material-icons" data-toggle="tooltip" title="Edit" style="color: greenyellow;">&#xE254;</i>
                                 </a>
-                                <a href="#deleteDentistModal" class="deleteU" data-toggle="modal" data-id="<%=list.getId()%>">
+                                <a href="#deleteDentistModal" class="deleteD" data-toggle="modal" 
+                                   data-idu="<%=list.getUser().getId()%>"
+                                   data-idd="<%=list.getId()%>">
                                     <i class="material-icons" data-toggle="tooltip" title="Delete" style="color: red;">&#xE872;</i>
                                 </a>
                             </td>
@@ -95,7 +96,7 @@
             <div class="modal-content">
                 <form action="../DentistController" method="POST">
                     <div class="modal-header">						
-                        <h4 class="modal-title">Editar Dentista</h4>
+                        <h4 class="modal-title">Edit dentist</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">					
@@ -106,19 +107,19 @@
                             <input type="text" class="form-control" id="editDni" name="dniEdit" required>
                         </div>
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>First name</label>
                             <input type="text" class="form-control" id="editName" name="nameEdit" required>
                         </div>
                         <div class="form-group">
-                            <label>Last Name</label>
+                            <label>Last name</label>
                             <input type="text" class="form-control" id="editLastName" name="lastNameEdit" required>
                         </div>	
-                         <div class="form-group">
-                            <label>User Name</label>
+                        <div class="form-group">
+                            <label>User name</label>
                             <input type="text" class="form-control" id="userNameEdit" name="userNameEdit" required>
                         </div>	
                         <div class="form-group">
-                            <label>Phone Number</label>
+                            <label>Phone number</label>
                             <input type="text" class="form-control" id="editPhoneNumber" name="phoneNumberEdit" required>
                         </div>
                         <div class="form-group">
@@ -159,7 +160,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-info" name="action" value="edit">Editar</button>
+                        <button type="submit" class="btn btn-info" name="action" value="edit">Edit</button>
                     </div>
                 </form>
             </div>
@@ -172,17 +173,24 @@
             <div class="modal-content">
                 <form action="../DentistController" method="POST">
                     <div class="modal-header">						
-                        <h4 class="modal-title">Eliminar Dentista</h4>
+                        <h4 class="modal-title">Delete dentist</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    <input type="hidden" id="deleteId" name="id_dentistEliminar">
+                    <!-- <input type="hidden" class="form-control" id="deleteId" name="id_dentistEliminar"> --> 
+
+                    <input type="hidden" class="form-control" id="deleteIdU" name="id_usuarioEliminar" required>
+
+                    <input type="hidden" class="form-control" id="deleteIdD" name="id_dentistEliminar" required>
+
+
                     <div class="modal-body">					
-                        <p>¿Está seguro de eliminar este dentista?</p>
-                        <p class="text-warning"><small>¡Esta acción no se puede deshacer!</small></p>
+                        <p>Are you sure you want to delete this dentist?</p>
+                        <p class="text-warning"><small>This action cannot be undone!</small></p>
                     </div>
+
                     <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-                        <input type="submit" class="btn btn-danger" name="action" value="Delete">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                        <input type="submit" class="btn btn-danger" name="action" value="delete">
                     </div>
                 </form>
             </div>

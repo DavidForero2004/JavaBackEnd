@@ -30,7 +30,7 @@
             if (urlParams.has('success')) {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Registro Exitoso',
+                    title: 'Acción Exitosa',
                     text: urlParams.get('success'),
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: 'OK'
