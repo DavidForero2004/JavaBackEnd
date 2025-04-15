@@ -1,19 +1,8 @@
 <%@page import="controller.userController"%>
 <%@page import="model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-    response.setHeader("Pragma", "no-cache");
-    response.setDateHeader("Expires", 0);
-    
-    HttpSession sessionObj = request.getSession(false);
-    User user = (sessionObj != null) ? (User) sessionObj.getAttribute("userSession") : null;
 
-    if (user == null) {
-        response.sendRedirect(request.getContextPath() + "/login.jsp");
-        return;
-    }
-%>
+
 <!DOCTYPE html>
 <div id="content">
     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -30,7 +19,7 @@
             <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Welcome<b> <%= user.getUserName() %></b> </span>
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Welcome<b> ${sessionScope.currentUser.userName}</b> </span>
                     <img class="img-profile rounded-circle"
                          src="../styles/img/undraw_profile_3.svg">
                 </a>
